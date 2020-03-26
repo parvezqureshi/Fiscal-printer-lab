@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_print_wizard" model="ir.ui.view">
+        <field name="name">pos.order.print.wizard.form</field>
+        <field name="model">pos.order.print.wizard</field>
+        <field name="arch" type="xml">
+            <form string="POS Order">
+                <group>
+                    <field name="pos_config_id"/>
+                </group>
+                <footer>
+                    <button name="generate_pos_order_nfd" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pos_order_print" model="ir.actions.act_window">
+        <field name="name">Print POS Order</field>
+        <field name="res_model">pos.order.print.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

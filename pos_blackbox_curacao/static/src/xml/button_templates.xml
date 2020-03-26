@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="XreportButton">
+        <div class="oe_status">
+            <div class="js_connected oe_icon">
+                <i class='fa fa-fw fa-file-text-o'></i>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ZClosureButton">
+        <div class="oe_status">
+            <div class="js_connected oe_icon">
+                <i class='fa fa-file-text'></i>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="UpliftButton">
+        <div class='control-button js_uplift'>
+            <i class='fa fa-tag' /> Uplift
+        </div>
+    </t>
+
+    <t t-name="ServiceChargeButton">
+        <div class='control-button js_uplift'>
+            <i class='fa fa-tag' /> Service Charge
+        </div>
+    </t>
+
+    <t t-name="CreditNoteButton">
+        <div class='control-button js_creditNoteBtn'>
+            <i class='fa fa-tag' /> Credit Note
+        </div>
+    </t>
+
+    <t t-name="permission_button">
+        <div class="oe_status">
+            <div class="js_connected oe_icon">
+                <i class='fa fa-fw fa-lock'></i>
+            </div>
+        </div>
+    </t>
+
+</templates>

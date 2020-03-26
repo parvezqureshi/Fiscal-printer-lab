@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_action_pos_order"
+            string="POS Order"
+            model="pos.order"
+            report_type="qweb-pdf"
+            file="pos_blackbox_curacao.report_pos_order"
+            name="pos_blackbox_curacao.report_pos_order"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend='ClientDetails'>
+        <t t-jquery='.client-details-left' t-operation='append'>
+            <div class='client-detail'>
+                <span class='label' style="white-space: nowrap;vertical-align: top;">Tax Exempt</span>
+                <t t-if='partner.is_tax_exempt'>
+                    <span class='detail client-is_tax_exempt'>
+                        <t t-esc='partner.is_tax_exempt ? "Enable":"Disable"'/>
+                    </span>
+                </t>
+            </div>
+        </t>
+        <t t-jquery='.client-details-right' t-operation='append'>
+            <div class='client-detail'>
+                <span class='label'>CRIB Number</span>
+                <t t-if='partner.crib'>            
+                    <span class='detail client-crib'>
+                        <t t-esc='partner.crib'/>
+                    </span>
+                </t>
+            </div>
+        </t>
+        <t t-jquery='.client-details-left' t-operation='append'>
+            <div class='client-detail'>
+                <span class='label' style="white-space: nowrap;vertical-align: top;">Is Company</span>
+                <t t-if='partner.is_company'>
+                    <span class='detail client-is_company'>
+                        <t t-esc='partner.is_company ? "Enable":"Disable"'/>
+                    </span>
+                </t>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend='ClientDetailsEdit'>
+        <t t-jquery='.client-details-left' t-operation='append'>
+            <div class='client-detail'>
+                <span class='label' style="white-space: nowrap;vertical-align: top;">Tax Exempt</span>
+                    <span>
+                        <input class='detail client-is_tax_exempt' type="checkbox" name='is_tax_exempt' t-att-checked='partner.is_tax_exempt or None' style="text-align:center;height:18px;width:18px;"></input>
+                    </span>
+            </div>
+        </t>
+        <t t-jquery='.client-details-right' t-operation='append'>
+            <div class='client-detail'>
+                <span class='label'>CRIB Number</span>
+                    <span>
+                        <input class='detail client-crib' name='crib' t-att-value='partner.crib || ""' placeholder='crib Number'></input>
+                    </span>
+            </div>
+        </t>
+        <t t-jquery='.client-details-left' t-operation='append'>
+            <div class='client-detail'>
+                <span class='label' style="white-space: nowrap;vertical-align: top;">Is Company</span>
+                    <span>
+                        <input class='detail client-is_company' type="checkbox" name='is_company' t-att-checked='partner.is_company or None' style="text-align:center;height:18px;width:18px;"></input>
+                    </span>
+            </div>
+        </t>
+    </t>
+
+</templates>

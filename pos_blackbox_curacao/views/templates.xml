@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+    <template id="assets_backend" name="pos assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_blackbox_curacao/static/src/js/data_model.js"/>
+        </xpath>
+    </template>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_blackbox_curacao/static/src/js/screens.js"/>
+            <script type="text/javascript" src="/pos_blackbox_curacao/static/src/js/credit_note.js"/>
+
+            <link rel="stylesheet" href="/pos_blackbox_curacao/static/src/scss/credit_note.scss"/>
+        </xpath>
+    </template>
+	
+	</data>
+</odoo>

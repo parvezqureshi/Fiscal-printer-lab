@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_add_crib_tax_exempt" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="point_of_sale.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="is_tax_exempt"/>
+                    <field name="crib" attrs="{'required': [('is_tax_exempt','=',True)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
