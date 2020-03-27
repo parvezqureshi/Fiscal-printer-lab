@@ -60,6 +60,7 @@ var PaymentScreen = screens.PaymentScreenWidget.extend({
             _.each(orderlines, function (order, index) {
                 _.extend(self.orders.orderlines[index], {
                     'old_price': order.product.price,
+                    'product_id': order.product.id,
                     'old_tax': self.pos.taxes_by_id[order.product.taxes_id[0]],
                 });
             });

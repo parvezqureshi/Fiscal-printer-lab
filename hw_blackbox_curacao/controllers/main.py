@@ -95,6 +95,7 @@ class hw_blackbox_curacao(http.Controller):
                 for order in orders.get('orderlines'):
                     # 2 Add Items to Invoice
                     item_name = str(order.get('product_name'))
+                    item_id = order.get('product_id')
                     item_qty = self._format_value(
                         5, 3, abs(order.get('quantity')))
                     item_price = 0
@@ -110,21 +111,21 @@ class hw_blackbox_curacao(http.Controller):
                     item_tax = self._format_value(2, 2, order.get(
                         'old_tax').get('amount') if order.get('old_tax') else 0)
 
-                    if orders.get("global_discount_product") and item_name == orders.get("global_discount_product"):
+                    if orders.get("global_discount_product") and item_id == orders.get("global_discount_product"):
                         self.global_discount_price = self._format_value(
                             9, 2, (-1*order.get('price')))
                         self.global_discount_pc = orders.get(
                             'global_discount_pc')
                         continue
-                    elif orders.get("global_tip_product") and item_name == orders.get("global_tip_product"):
+                    elif orders.get("global_tip_product") and item_id == orders.get("global_tip_product"):
                         self.global_tip_price = self._format_value(
                             9, 2, (order.get('price')))
                         continue
-                    elif orders.get("global_uplift_product") and item_name == orders.get("global_uplift_product"):
+                    elif orders.get("global_uplift_product") and item_id == orders.get("global_uplift_product"):
                         self.global_uplift_price = self._format_value(
                             9, 2, (order.get('price')))
                         continue
-                    elif orders.get("service_charge") and item_name == orders.get("service_charge_product_id"):
+                    elif orders.get("service_charge") and item_id == orders.get("service_charge_product_id"):
                         self.service_charge = self._format_value(
                             9, 2, (order.get('price')))
                         continue
@@ -249,19 +250,18 @@ class hw_blackbox_curacao(http.Controller):
         return final_str
 
     def init_fiscal_driver(self, port):
-        #try:
-        _logger.info('Initialize Fiscal Printer Driver')
-        path = get_module_resource(
-            'hw_blackbox_curacao', 'escpos', 'lib', 'libEpsonFiscalDriver.so')
-        print("\n>>>>path", path)
-        self.Handle_EpsonFiscalDriver = ctypes.cdll.LoadLibrary(path)
-        Protocol = 1
-        self.Handle_EpsonFiscalDriver.setProtocolType(Protocol)
-        self.Handle_EpsonFiscalDriver.setComPort(port)
-        self.Handle_EpsonFiscalDriver.setBaudRate(9600)
-        # except:
-        #     _logger.error(
-        #         'Odoo module hw_blackbox_curacao depends on the libEpsonFiscalDriver.so module')
+        try:
+            _logger.info('Initialize Fiscal Printer Driver')
+            path = get_module_resource(
+                'hw_blackbox_curacao', 'escpos', 'lib', 'libEpsonFiscalDriver.so')
+            self.Handle_EpsonFiscalDriver = ctypes.cdll.LoadLibrary(path)
+            Protocol = 1
+            self.Handle_EpsonFiscalDriver.setProtocolType(Protocol)
+            self.Handle_EpsonFiscalDriver.setComPort(port)
+            self.Handle_EpsonFiscalDriver.setBaudRate(9600)
+        except:
+            _logger.error(
+                'Odoo module hw_blackbox_curacao depends on the libEpsonFiscalDriver.so module')
 
     def create_command(self, cmd, ext, *args):
         if isinstance(cmd, str):
