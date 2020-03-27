@@ -74,11 +74,11 @@ var PaymentScreen = screens.PaymentScreenWidget.extend({
                     txn_number: self.generate_txn()
                 });
                 self.orders =  _.extend(self.orders, {
-                    global_discount_product: self.pos.config.discount_product_id ? self.pos.config.discount_product_id[1] : false,
-                    global_tip_product: self.pos.config.tip_product_id ? self.pos.config.tip_product_id[1] : false,
-                    global_uplift_product: self.pos.config.uplift_product_id ? self.pos.config.uplift_product_id[1] : false,
+                    global_discount_product: self.pos.config.discount_product_id ? self.pos.config.discount_product_id[0] : false,
+                    global_tip_product: self.pos.config.tip_product_id ? self.pos.config.tip_product_id[0] : false,
+                    global_uplift_product: self.pos.config.uplift_product_id ? self.pos.config.uplift_product_id[0] : false,
                     service_charge: self.pos.config.service_charge,
-                    service_charge_product_id: self.pos.config.service_charge_product_id ? self.pos.config.service_charge_product_id[1] : false,
+                    service_charge_product_id: self.pos.config.service_charge_product_id ? self.pos.config.service_charge_product_id[0] : false,
                     com_port: self.pos.config.com_port
                 });
                 self.pos.db.last_order = self.orders;
