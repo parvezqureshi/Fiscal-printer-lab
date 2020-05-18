@@ -59,7 +59,7 @@ var PaymentScreen = screens.PaymentScreenWidget.extend({
             });
             _.each(orderlines, function (order, index) {
                 _.extend(self.orders.orderlines[index], {
-                    'old_price': order.product.price,
+                    'old_price': order.product.lst_price,
                     'product_id': order.product.id,
                     'old_tax': self.pos.taxes_by_id[order.product.taxes_id[0]],
                 });
@@ -149,7 +149,7 @@ var ClientListScreenWidget = screens.ClientListScreenWidget.extend({
         * Super Function
         */
         this.$('.client-details-contents .detail').each(function(idx,el){
-            if (el.name == 'is_company') debugger;
+            if (el.name == 'is_company')
             if (self.integer_client_details.includes(el.name)){
                 var parsed_value = parseInt(el.value, 10);
                 if (isNaN(parsed_value)){

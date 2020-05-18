@@ -97,37 +97,37 @@ class hw_blackbox_curacao(http.Controller):
                     item_name = str(order.get('product_name'))
                     item_id = order.get('product_id')
                     item_qty = self._format_value(
-                        5, 3, abs(order.get('quantity')))
+                        5, 3, abs(order.get('quantity', 0)))
                     item_price = 0
                     if self.client_details and self.client_details.get('is_tax_exempt'):
                         item_price = self._format_value(
-                            7, 2, abs(order.get('old_price')))
+                            7, 2, abs(order.get('old_price', 0)))
                     else:
                         item_price = self._format_value(
-                            7, 2, abs(order.get('price')))
+                            7, 2, abs(order.get('price', 0)))
 
                     discount_price = self._format_value(
-                        7, 2, (abs(order.get('price')) * abs(order.get('discount')) / 100.00))
+                        7, 2, (abs(order.get('price', 0)) * abs(order.get('discount', 0)) / 100.00))
                     item_tax = self._format_value(2, 2, order.get(
                         'old_tax').get('amount') if order.get('old_tax') else 0)
 
                     if orders.get("global_discount_product") and item_id == orders.get("global_discount_product"):
                         self.global_discount_price = self._format_value(
-                            9, 2, (-1*order.get('price')))
+                            9, 2, (-1*order.get('price', 0)))
                         self.global_discount_pc = orders.get(
                             'global_discount_pc')
                         continue
                     elif orders.get("global_tip_product") and item_id == orders.get("global_tip_product"):
                         self.global_tip_price = self._format_value(
-                            9, 2, (order.get('price')))
+                            9, 2, (order.get('price', 0)))
                         continue
                     elif orders.get("global_uplift_product") and item_id == orders.get("global_uplift_product"):
                         self.global_uplift_price = self._format_value(
-                            9, 2, (order.get('price')))
+                            9, 2, (order.get('price', 0)))
                         continue
                     elif orders.get("service_charge") and item_id == orders.get("service_charge_product_id"):
                         self.service_charge = self._format_value(
-                            9, 2, (order.get('price')))
+                            9, 2, (order.get('price', 0)))
                         continue
                     else:
                         disc_desc = ""
