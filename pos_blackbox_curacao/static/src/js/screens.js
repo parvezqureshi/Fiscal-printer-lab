@@ -87,17 +87,17 @@ var PaymentScreen = screens.PaymentScreenWidget.extend({
                     self.pos.chrome.loading_message(_t('Printing ...'));
                     var url = "http://"+self.pos.config.proxy_ip;
                     self.connection = new Session(undefined,url, { use_cors: true});
-                    self.connection.rpc('/action_validate_payment',self.orders,{timeout: 15000}).then(function (return_code) {
+                    self.connection.rpc('/action_validate_payment',self.orders,{timeout: 15000}).then(function (response) {
                         self.pos.chrome.loading_message(_t('Printing Done...'), 1);
                         self.pos.chrome.loading_hide();
-                        if (return_code) {
-                           return self.comand_error(return_code);
+                        if (response && response.code) {
+                           return self.comand_error(response);
                         } else {
                             self.finalize_validation();
                         }
                     });
                 } else {
-                    return self.comand_error("Reciept Printer is not enable in Setting");
+                    return self.comand_error({"message": "Reciept Printer is not enable in Setting"});
                 }
             });
         }
@@ -111,10 +111,13 @@ var PaymentScreen = screens.PaymentScreenWidget.extend({
         ir_seq[0].number_next_actual = parseInt(ir_seq[0].number_next_actual) + parseInt(ir_seq[0].number_increment);
         return ("000000" + order_number).slice(-6);
     },
-    comand_error: function (error_code) {
+    comand_error: function (error) {
         this.gui.show_popup('error',{
             'title': _t('Fiscal Printer Comand Error'),
-            'body': _t('Error Code : '+error_code),
+            'body': _t(
+                'Error Code : '+ error.code + ' ' +
+                'Error Message:' + error.message
+            ),
         });
         return false;
     },
@@ -303,22 +306,25 @@ var XreportButton = PosBaseWidget.extend({
                         self.param['com_port'] = self.pos.config.com_port;
                         var url = "http://"+self.pos.config.proxy_ip;
                         self.connection = new Session(undefined,url, { use_cors: true});
-                        self.connection.rpc('/action_x_report',self.param,{timeout: 15000}).then(function (return_code) {
-                            if (return_code != 0) {
-                                self.comand_error(return_code);
+                        self.connection.rpc('/action_x_report',self.param,{timeout: 15000}).then(function (response) {
+                            if (response && response.code != 0) {
+                                self.comand_error(response);
                             }
                         });
                     } else {
-                        self.comand_error('Receipt Printer Option is not Enable in POS Configuration.');
+                        self.comand_error({'message': 'Receipt Printer Option is not Enable in POS Configuration.'});
                     }
                 },
             });
         });
     },
-    comand_error: function (error_code) {
+    comand_error: function (error) {
         this.gui.show_popup('error',{
             'title': _t('Fiscal Printer Comand Error'),
-            'body': _t('Error : '+error_code),
+            'body': _t(
+                'Error Code : '+ error.code + ' ' +
+                'Error Message:' + error.message
+            ),
         });
         return false;
     },
@@ -466,9 +472,9 @@ var ReprintButton = screens.ActionButtonWidget.extend({
             var url = "http://"+this.pos.config.proxy_ip;
             this.connection = new Session(undefined,url, { use_cors: true});
             var self = this;
-            this.connection.rpc('/action_generate_pos_order_nfd',this.pos.db.last_order,{timeout:15000}).then(function(return_code) {
-                if (return_code) {
-                    self.comand_error(return_code);
+            this.connection.rpc('/action_generate_pos_order_nfd',this.pos.db.last_order,{timeout:15000}).then(function(response) {
+                if (response && response.code) {
+                    self.comand_error(response);
                 }
             });
         } else {
@@ -478,10 +484,13 @@ var ReprintButton = screens.ActionButtonWidget.extend({
             });
         }
     },
-    comand_error: function (error_code) {
+    comand_error: function (error) {
         this.gui.show_popup('error',{
             'title': _t('Fiscal Printer Comand Error'),
-            'body': _t('Error Code : '+error_code),
+            'body': _t(
+                'Error Code : '+ error.code + ' ' +
+                'Error Message:' + error.message
+            ),
         });
         return false;
     },

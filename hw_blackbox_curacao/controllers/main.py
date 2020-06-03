@@ -10,6 +10,7 @@ from odoo import http
 from odoo import models, fields, api, _
 from odoo.modules.module import get_module_resource
 from .. escpos.constants import *
+from .. escpos.error_code import get_error_message
 
 _logger = logging.getLogger(__name__)
 
@@ -237,7 +238,10 @@ class hw_blackbox_curacao(http.Controller):
             _logger.error('Fiscal Printing Comand Error: ', e.args)
             self.create_command(TXN_CANCEL, "\x00\x00")
             self.Handle_EpsonFiscalDriver.SendCommand()
-            return e.args
+            return {
+                "message": get_error_message(e.args[0]),
+                "code": e.args
+            }
         finally:
             self.Handle_EpsonFiscalDriver.ClosePort()
 
@@ -284,7 +288,10 @@ class hw_blackbox_curacao(http.Controller):
             return 0
         except Exception as e:
             _logger.error('Fiscal Printing Error:', e.args)
-            return e.args
+            return {
+                "message": get_error_message(e.args[0]),
+                "code": e.args
+            }
         finally:
             self.Handle_EpsonFiscalDriver.ClosePort()
 

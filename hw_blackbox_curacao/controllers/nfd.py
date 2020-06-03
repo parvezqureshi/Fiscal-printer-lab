@@ -8,6 +8,7 @@ from odoo import http, _
 from ctypes import byref, c_int, c_char
 from odoo.modules.module import get_module_resource
 from .. escpos.constants import *
+from .. escpos.error_code import get_error_message
 
 _logger = logging.getLogger(__name__)
 
@@ -178,7 +179,10 @@ class nfd(http.Controller):
             return 0
         except Exception as e:
             _logger.error('Error While Printing Non Fiscal Document:',e.args)
-            return e.args
+            return {
+                "message": get_error_message(e.args[0]),
+                "code": e.args
+            }
         finally:
             nfd_close()
             self.Handle_EpsonFiscalDriver.ClosePort()
