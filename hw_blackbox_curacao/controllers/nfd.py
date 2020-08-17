@@ -156,7 +156,7 @@ class nfd(http.Controller):
             eprint(' ')
             # Paymentlines
             for line in receipt['paymentlines']:
-                eprint(printline(line['journal'], money(line['amount']), ratio=0.6))
+                eprint(printline(line['payment_method'], money(line['amount']), ratio=0.6))
             eprint(' ')
 
             eprint(printline(_('        CHANGE'),money(receipt['change']),width=50, ratio=0.6))

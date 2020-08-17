@@ -153,6 +153,10 @@ def convert_to_hex(number):
     return format(int(number), 'x').zfill(4).upper()
 
 def get_error_message(number):
+    try:
+        int(number)
+    except ValueError:
+        return number
     key = convert_to_hex(number)
     # return ERROR_CODE.get(key, "Error!")
     return ERROR_CODE[key]

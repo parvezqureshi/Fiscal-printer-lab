@@ -98,17 +98,17 @@ class hw_blackbox_curacao(http.Controller):
                     item_name = str(order.get('product_name'))
                     item_id = order.get('product_id')
                     item_qty = self._format_value(
-                        5, 3, abs(order.get('quantity', 0)))
+                        5, 3, abs(order.get('quantity') or 0))
                     item_price = 0
                     if self.client_details and self.client_details.get('is_tax_exempt'):
                         item_price = self._format_value(
-                            7, 2, abs(order.get('old_price', 0)))
+                            7, 2, abs(order.get('old_price') or 0))
                     else:
                         item_price = self._format_value(
-                            7, 2, abs(order.get('price', 0)))
+                            7, 2, abs(order.get('price') or 0))
 
                     discount_price = self._format_value(
-                        7, 2, (abs(order.get('price', 0)) * abs(order.get('discount', 0)) / 100.00))
+                        7, 2, (abs(order.get('price') or 0) * abs(order.get('discount') or 0) / 100.00))
                     item_tax = self._format_value(2, 2, order.get(
                         'old_tax').get('amount') if order.get('old_tax') else 0)
 

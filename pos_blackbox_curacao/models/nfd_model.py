@@ -69,7 +69,7 @@ class NFD_Model(models.Model):
             if payment.amount > 0:
                 params['paymentlines'].append({
                     'amount': payment.amount,
-                    'journal': payment.payment_method_id.name or '',
+                    'payment_method': payment.payment_method_id.name or '',
                 })
 
         return params
