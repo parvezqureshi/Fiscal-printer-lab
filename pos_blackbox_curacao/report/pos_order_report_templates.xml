@@ -105,22 +105,20 @@
                 <thead>
                     <tr>
                         <th>Journal</th>
-                        <th>Statement</th>
                         <th>Date</th>
                         <th>Label</th>
                         <th class="text-right">Amount</th>
                     </tr>
                </thead>
                <tbody class="sale_tbody">
-                        <!-- Lines associated -->
-                    <t t-foreach="doc.statement_ids" t-as="l">
+                    <!-- Lines associated -->
+                    <t t-foreach="doc.payment_ids" t-as="payment">
                         <tr>
-                            <td><span t-field="l.journal_id"/></td>
-                            <td><span t-field="l.statement_id"/></td>
-                            <td><span t-field="l.date"/></td>
-                            <td><span t-field="l.name"/></td>
+                            <td><span t-field="payment.payment_method_id"/></td>
+                            <td><span t-field="payment.payment_date"/></td>
+                            <td><span t-field="payment.name"/></td>
                             <td class="text-right">
-                                <span t-field="l.amount"
+                                <span t-field="payment.amount"
                                     t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                             </td>
                         </tr>
