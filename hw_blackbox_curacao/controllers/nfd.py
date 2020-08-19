@@ -53,26 +53,26 @@ class nfd(http.Controller):
                 eprint(printline(tax['name'],price(tax['amount']), width=50,ratio=0.6))
 
         def eprint(text):
-            self.Handle_EpsonFiscalDriver.AddDataField(NFD_PRINT, 2)
-            self.Handle_EpsonFiscalDriver.AddDataField("", 2)
-            self.Handle_EpsonFiscalDriver.AddDataField(str(text), len(str(text)))
+            self.Handle_EpsonFiscalDriver.AddDataField(bytes(NFD_PRINT, 'utf-8'), 2)
+            self.Handle_EpsonFiscalDriver.AddDataField(bytes("", 'utf-8'), 2)
+            self.Handle_EpsonFiscalDriver.AddDataField(bytes(text, 'utf-8'), len(str(text)))
             send_command()
 
         def nfd_open():
-            self.Handle_EpsonFiscalDriver.AddDataField(NFD_OPN_RECPT, 2)
-            self.Handle_EpsonFiscalDriver.AddDataField("\x00\x00", 2)
+            self.Handle_EpsonFiscalDriver.AddDataField(bytes(NFD_OPN_RECPT, 'utf-8'), 2)
+            self.Handle_EpsonFiscalDriver.AddDataField(bytes("\x00\x00", 'utf-8'), 2)
             send_command()
 
         def nfd_close():
-            self.Handle_EpsonFiscalDriver.AddDataField(NFD_CLOSE, 2)
-            self.Handle_EpsonFiscalDriver.AddDataField("\x00\x00", 2)
+            self.Handle_EpsonFiscalDriver.AddDataField(bytes(NFD_CLOSE, 'utf-8'), 2)
+            self.Handle_EpsonFiscalDriver.AddDataField(bytes("\x00\x00", 'utf-8'), 2)
             send_command()
 
         def send_command():
             self.Handle_EpsonFiscalDriver.SendCommand()
             if (self.Handle_EpsonFiscalDriver.getReturnCode()):
-                self.Handle_EpsonFiscalDriver.AddDataField(NFD_CLOSE, 2)
-                self.Handle_EpsonFiscalDriver.AddDataField("\x00\x00", 2)
+                self.Handle_EpsonFiscalDriver.AddDataField(bytes(NFD_CLOSE, 'utf-8'), 2)
+                self.Handle_EpsonFiscalDriver.AddDataField(bytes("\x00\x00", 'utf-8'), 2)
                 self.Handle_EpsonFiscalDriver.SendCommand()
 
                 raise Exception(self.Handle_EpsonFiscalDriver.getReturnCode())
@@ -176,7 +176,7 @@ class nfd(http.Controller):
             eprint(receipt['name'])
             eprint(str(receipt['date_order']))
 
-            return 0
+            return True
         except Exception as e:
             _logger.error('Error While Printing Non Fiscal Document:',e.args)
             return {

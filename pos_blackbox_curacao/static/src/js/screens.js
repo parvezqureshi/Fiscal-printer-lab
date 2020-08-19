@@ -79,7 +79,8 @@ var PaymentScreen = screens.PaymentScreenWidget.extend({
                     global_uplift_product: self.pos.config.uplift_product_id ? self.pos.config.uplift_product_id[0] : false,
                     service_charge: self.pos.config.service_charge,
                     service_charge_product_id: self.pos.config.service_charge_product_id ? self.pos.config.service_charge_product_id[0] : false,
-                    com_port: self.pos.config.com_port
+                    com_port: self.pos.config.com_port,
+                    date_order: order_value.creation_date
                 });
                 self.pos.db.last_order = self.orders;
                 if(self.pos.config.proxy_ip){
