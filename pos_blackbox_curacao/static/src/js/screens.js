@@ -40,69 +40,69 @@ devices.ProxyDevice.include({
 
 // Main fiscal Order Processing and sending Mechanism.
 var PaymentScreen = screens.PaymentScreenWidget.extend({
-//    validate_order: function(force_validation) {
-//        if (this.order_is_valid(force_validation)) {
-//            this.orders = this.pos.get_order().export_for_printing();
-//            this.client_details = this.pos.get_client();
-//            var paymentlines = this.pos.get_order().get_paymentlines();
-//            var orderlines = this.pos.get_order().get_orderlines();
-//            var order_value = this.pos.get_order();
-//            var prom = Promise.resolve();
-//            var self = this;
-//            _.each(paymentlines, function (payment, index) {
-//                var payment_type_id = payment.payment_method.fiscal_payment_type[0];
-//                var method = self.pos.payment_method_list.find(function (types) {
-//                    return types.payment_method_id == payment_type_id;
-//                });
-//                var payment_method_id = method && method.payment_method_id || 1;
-//                _.extend(self.orders.paymentlines[index], { 'fiscal_payment_type': payment_method_id });
-//            });
-//            _.each(orderlines, function (order, index) {
-//                _.extend(self.orders.orderlines[index], {
-//                    'old_price': order.product.lst_price,
-//                    'product_id': order.product.id,
-//                    'old_tax': self.pos.taxes_by_id[order.product.taxes_id[0]],
-//                });
-//            });
-//            prom.then(function () {
-//                self.orders =  _.extend(self.orders, {
-//                    client_details: self.client_details,
-//                    pos_config: self.pos.config,
-//                    is_credit_note: order_value.is_credit_note,
-//                    nkf_ref: order_value.nkf_ref,
-//                    global_discount_pc: order_value.global_discount_pc,
-//                    txn_number: self.generate_txn()
-//                });
-//                self.orders =  _.extend(self.orders, {
-//                    global_discount_product: self.pos.config.discount_product_id ? self.pos.config.discount_product_id[0] : false,
-//                    global_tip_product: self.pos.config.tip_product_id ? self.pos.config.tip_product_id[0] : false,
-//                    global_uplift_product: self.pos.config.uplift_product_id ? self.pos.config.uplift_product_id[0] : false,
-//                    service_charge: self.pos.config.service_charge,
-//                    service_charge_product_id: self.pos.config.service_charge_product_id ? self.pos.config.service_charge_product_id[0] : false,
-//                    com_port: self.pos.config.com_port,
-//                    date_order: order_value.creation_date
-//                });
-//                self.pos.db.last_order = self.orders;
-//                if(self.pos.config.proxy_ip){
-//                    self.pos.chrome.loading_show();
-//                    self.pos.chrome.loading_message(_t('Printing ...'));
-//                    var url = "http://"+self.pos.config.proxy_ip;
-//                    self.connection = new Session(undefined,url, { use_cors: true});
-//                    self.connection.rpc('/action_validate_payment',self.orders,{timeout: 15000}).then(function (response) {
-//                        self.pos.chrome.loading_message(_t('Printing Done...'), 1);
-//                        self.pos.chrome.loading_hide();
-//                        if (response && response.code) {
-//                           return self.comand_error(response);
-//                        } else {
-//                            self.finalize_validation();
-//                        }
-//                    });
-//                } else {
-//                    return self.comand_error({"message": "Reciept Printer is not enable in Setting"});
-//                }
-//            });
-//        }
-//    },
+    validate_order: function(force_validation) {
+        if (this.order_is_valid(force_validation)) {
+            this.orders = this.pos.get_order().export_for_printing();
+            this.client_details = this.pos.get_client();
+            var paymentlines = this.pos.get_order().get_paymentlines();
+            var orderlines = this.pos.get_order().get_orderlines();
+            var order_value = this.pos.get_order();
+            var prom = Promise.resolve();
+            var self = this;
+            _.each(paymentlines, function (payment, index) {
+                var payment_type_id = payment.payment_method.fiscal_payment_type[0];
+                var method = self.pos.payment_method_list.find(function (types) {
+                    return types.payment_method_id == payment_type_id;
+                });
+                var payment_method_id = method && method.payment_method_id || 1;
+                _.extend(self.orders.paymentlines[index], { 'fiscal_payment_type': payment_method_id });
+            });
+            _.each(orderlines, function (order, index) {
+                _.extend(self.orders.orderlines[index], {
+                    'old_price': order.product.lst_price,
+                    'product_id': order.product.id,
+                    'old_tax': self.pos.taxes_by_id[order.product.taxes_id[0]],
+                });
+            });
+            prom.then(function () {
+                self.orders =  _.extend(self.orders, {
+                    client_details: self.client_details,
+                    pos_config: self.pos.config,
+                    is_credit_note: order_value.is_credit_note,
+                    nkf_ref: order_value.nkf_ref,
+                    global_discount_pc: order_value.global_discount_pc,
+                    txn_number: self.generate_txn()
+                });
+                self.orders =  _.extend(self.orders, {
+                    global_discount_product: self.pos.config.discount_product_id ? self.pos.config.discount_product_id[0] : false,
+                    global_tip_product: self.pos.config.tip_product_id ? self.pos.config.tip_product_id[0] : false,
+                    global_uplift_product: self.pos.config.uplift_product_id ? self.pos.config.uplift_product_id[0] : false,
+                    service_charge: self.pos.config.service_charge,
+                    service_charge_product_id: self.pos.config.service_charge_product_id ? self.pos.config.service_charge_product_id[0] : false,
+                    com_port: self.pos.config.com_port,
+                    date_order: order_value.creation_date
+                });
+                self.pos.db.last_order = self.orders;
+                if(self.pos.config.proxy_ip){
+                    self.pos.chrome.loading_show();
+                    self.pos.chrome.loading_message(_t('Printing ...'));
+                    var url = "http://"+self.pos.config.proxy_ip;
+                    self.connection = new Session(undefined,url, { use_cors: true});
+                    self.connection.rpc('/action_validate_payment',self.orders,{timeout: 15000}).then(function (response) {
+                        self.pos.chrome.loading_message(_t('Printing Done...'), 1);
+                        self.pos.chrome.loading_hide();
+                        if (response && response.code) {
+                           return self.comand_error(response);
+                        } else {
+                            self.finalize_validation();
+                        }
+                    });
+                } else {
+                    return self.comand_error({"message": "Reciept Printer is not enable in Setting"});
+                }
+            });
+        }
+    },
     generate_txn: function () {
         var self = this;
         var ir_seq = _.filter(this.pos.ir_seq, function(sequence) {
