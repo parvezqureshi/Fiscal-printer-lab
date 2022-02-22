@@ -9,6 +9,14 @@
         </div>
     </t>
 
+    <t t-name="ZreportButton">
+        <div class="oe_status">
+            <div class="js_connected oe_icon">
+                <i class='fa fa-fw fa-tasks'></i>
+            </div>
+        </div>
+    </t>
+
     <t t-name="ZClosureButton">
         <div class="oe_status">
             <div class="js_connected oe_icon">

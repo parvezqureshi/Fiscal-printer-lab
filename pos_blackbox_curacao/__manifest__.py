@@ -40,5 +40,6 @@ No modified version is certified and supported by Odoo India or Blueback B.V.
     'qweb': [
         'static/src/xml/tax_exempt.xml',
         'static/src/xml/button_templates.xml',
+        'static/src/xml/popup.xml',
     ],
 }

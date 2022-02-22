@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ZReportPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput">
+                <p class="title" style="border-bottom: solid 3px #6ec89b;"> 
+                    Z-Report 
+                </p>
+                <div style="font-size: 15px;text-align: left;">
+                    <table align='center' class="tbl">
+                        <tr>
+                            <td>Report Type</td>
+                            <td>
+                                <select id="report_type">
+                                    <option value="1">
+                                        Z closures reports by date range
+                                    </option>
+                                    <option value="2">
+                                        Z closure report by range of Z closures
+                                    </option>
+                                    <option value="3">
+                                        Information by date range
+                                    </option>
+                                    <option value="4">
+                                        Information by Z closures range
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="report_date_picker">
+                            <td>Start Date</td>
+                            <td>
+                                <input type="date" id="start_date"/>
+                            </td>
+                        </tr>
+                        <tr class="report_date_picker">
+                            <td>End Date</td>
+                            <td>
+                                <input type="date" id="end_date"/>
+                            </td>
+                        </tr>
+                        <tr class="report_number" style="display: none;">
+                            <td>Start Z Number</td>
+                            <td>
+                                <input type="number" id="start_z_number"/>
+                            </td>
+                        </tr>
+                        <tr class="report_number" style="display: none;">
+                            <td>End Z Number</td>
+                            <td>
+                                <input type="number" id="end_z_number"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Print
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
